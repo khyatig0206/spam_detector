@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spam Filter</title>
+
+    <!-- HTMX -->
+    <script src="https://unpkg.com/htmx.org@1.6.0"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+</head>
+<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+    <nav class="bg-blue-600 p-3" style="font-family: 'Montserrat', sans-serif;">
+        <div class="container mx-auto">
+            <div class="flex justify-between items-center">
+                <a href="{% url 'comments' %}" class="text-white text-lg">Spam Detector</a>
+            
+                    <div>
+                        {% if user.is_authenticated %}
+                            <span class="text-white mr-4">Welcome, {{ user.username }}!</span>
+                            <a href="{% url 'logout' %}" class="text-white">Logout</a>
+                        {% else %}
+                            <a href="{% url 'login' %}" class="text-white px-2">Login</a><span class="text-white">|</span> 
+                            <a href="{% url 'register' %}" class="text-white px-2">Register</a>
+                        {% endif %}
+                    </div>
+                
+            </div>
+        </div>
+    </nav>
+    <div class="mx-16 mt-8">
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>

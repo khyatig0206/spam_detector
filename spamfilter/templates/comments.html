@@ -1,0 +1,84 @@
+<style>
+    @keyframes giggle {
+        0%, 100% {
+            transform: rotate(0deg);
+        }
+        25% {
+            transform: rotate(0.2deg);
+        }
+        75% {
+            transform: rotate(-0.2deg);
+        }
+    }
+
+    .giggle:hover {
+        animation: giggle 0.3s ease-in-out;
+    }
+
+    .button-container {
+        display: flex;
+        gap: 10px; /* Space between the buttons */
+        margin-bottom: 16px; /* Space below the buttons */
+        
+    }
+</style>
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <!-- Example: Comments header -->
+    <h2 class="text-3xl mb-4 text-blue-600" style="font-family: 'Montserrat', sans-serif;">Comments</h2>
+
+    <div class="button-container">
+            <button class="text-white bg-blue-500 border border-blue-600 py-1 px-4 rounded hover:bg-blue-700" hx-get="{% url 'create_comment' %}"
+            hx-target="#create" hx-swap="outerHTML">
+               
+                    Create Comment
+                
+            </button>
+
+
+        
+            <button class="text-white bg-red-500 border border-red-600 py-1 px-4 rounded hover:bg-red-700" hx-get="{% url 'check_spam'%}"
+            hx-target="#comments" hx-swap="outerHTML">
+                Detect Spam
+            </button>
+      
+    </div>
+    <div id="create"></div>
+    <!-- Comments section -->
+    <div class="space-y-4 mb-8" style="font-family: 'Montserrat', sans-serif;" id="comments">
+        {% for comment in comments %}
+        <div class="mx-auto rounded overflow-hidden shadow-lg">
+
+            <div class="px-6 py-4">
+              <p class="text-gray-700 text-base">
+                {{ comment }}
+              </p>
+              {% if user.is_staff %}
+              <div class="giggle">
+              <button class="text-red-600 hover:bg-red-100 border border-red-600 py-1 px-4 mt-2 rounded"
+              hx-delete="{% url 'delete_comment' comment.pk %}">
+                Remove
+            </button>
+        </div>
+        {% endif %}
+            </div>
+            
+          </div>
+          {% endfor %}
+        
+    </div>
+
+<script>
+    htmx.on('htmx:afterRequest', function(e){
+        if (e.detail.requestConfig.verb === 'delete'){
+            const src =e.detail.elt
+            const card = htmx.closest(src,'div[class="mx-auto rounded overflow-hidden shadow-lg"]')
+            htmx.remove(card)
+        }
+    })
+</script>
+
+{% endblock content %}
