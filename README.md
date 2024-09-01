@@ -60,7 +60,7 @@ Welcome to the **Spam Detector Web App**! This application is designed to detect
 
 ![Screenshot (105)](https://github.com/user-attachments/assets/f5b28863-a628-4977-9ba6-474842c58e17)
 
-![Screenshot 2024-09-01 202713](https://github.com/user-attachments/assets/9d8475ea-94e1-437b-b593-4b87f0000df0)
+![Screenshot (108)](https://github.com/user-attachments/assets/e6e0cb52-8d78-40bb-9ada-406d334b5aae)
 
 ![Screenshot (106)](https://github.com/user-attachments/assets/26fcf16b-bdba-41f6-87b8-0ceb0f51b6ae)
 
