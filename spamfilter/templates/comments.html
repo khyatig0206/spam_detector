@@ -31,12 +31,10 @@
     <h2 class="text-3xl mb-4 text-blue-600" style="font-family: 'Montserrat', sans-serif;">Comments</h2>
 
     <div class="button-container">
-            <button class="text-white bg-blue-500 border border-blue-600 py-1 px-4 rounded hover:bg-blue-700" hx-get="{% url 'create_comment' %}"
-            hx-target="#create" hx-swap="outerHTML">
-               
-                    Create Comment
-                
-            </button>
+        <button class="text-white bg-blue-500 border border-blue-600 py-1 px-4 rounded hover:bg-blue-700"
+        onclick="handleCreateComment()">
+            Create Comment
+        </button>
 
 
         
@@ -44,6 +42,7 @@
             hx-target="#comments" hx-swap="outerHTML">
                 Detect Spam
             </button>
+            
       
     </div>
     <div id="create"></div>
@@ -70,7 +69,17 @@
           {% endfor %}
         
     </div>
-
+    <script>
+        function handleCreateComment() {
+            var isAuthenticated = "{{ user.is_authenticated }}"; // Convert Django boolean to string
+    
+            if (isAuthenticated === "True") {
+                htmx.ajax('GET', "{% url 'create_comment' %}", {target: '#create', swap: 'outerHTML'});
+            } else {
+                window.location.href = "{% url 'login' %}";
+            }
+        }
+    </script>
 <script>
     htmx.on('htmx:afterRequest', function(e){
         if (e.detail.requestConfig.verb === 'delete'){
